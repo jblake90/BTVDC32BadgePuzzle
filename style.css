@@ -1,42 +1,101 @@
-body, html {
+::selection {
+    background: #f7d07e; /* Amber selection background */
+}
+
+html, body {
+    width: 100%;
     height: 100%;
     margin: 0;
-    overflow: hidden;
-    background-color: #000; /* Black background */
-    color: #FFBF00; /* Amber font */
-    font-family: 'Courier New', Courier, monospace; /* Monospace font */
 }
 
-#terminal {
-    height: 95%;
-    overflow-y: auto;
-    padding: 20px;
-    border: none;
+body {
+    font-size: 13pt;
+    font-family: monospace;
+    color: #FFBF00; /* Amber text */
+    background-color: black;
 }
 
-#terminal-input {
-    width: calc(100% - 40px);
-    background-color: #000;
-    border: none;
-    color: #FFBF00; /* Amber font for input */
-    padding: 10px 20px;
-    font-family: 'Courier New', Courier, monospace;
-    box-sizing: border-box;
+#terminal { /* Assuming #container corresponds to #terminal */
+    padding: .1em 1.5em 1em 1em;
+    margin-left: 50px;
+}
+
+#terminal-input { /* Assuming #cmdline corresponds to #terminal-input */
     outline: none;
+    background-color: transparent;
+    margin: 0;
+    width: 100%;
+    font: inherit;
+    border: none;
+    color: inherit;
 }
 
-/* Blinking cursor effect */
-#terminal-input::placeholder {
-    color: #FFBF00; /* Amber placeholder text */
-    opacity: 1; /* Firefox */
+.input-line { /* Adjusting to ensure the prompt and input align correctly */
+    display: flex;
+    align-items: center;
+    clear: both;
+    color: #FFBF00; /* Amber text for input line */
 }
 
-#terminal-input:focus::placeholder {
-    animation: blink 1s step-end infinite;
+.input-line > div:nth-child(2) {
+    flex: 1;
 }
 
-@keyframes blink {
-    50% {
-        opacity: 0;
+.prompt-color { /* Not directly used, but here for potential customizations */
+    color: #24F2EE; /* Example: You can use this class for special prompt color */
+}
+
+/* Additional styles from your guide... */
+#output { /* Assuming this is for additional output styling */
+    clear: both;
+    width: 100%;
+}
+
+#prompt { /* Assuming this is for the static part of the prompt */
+    white-space: nowrap;
+    user-select: none;
+}
+
+/* SIDE NAV - Assuming this is additional UI outside the terminal scope */
+#sidenavBtn {
+    position: absolute !important;
+    padding: 2px !important;
+    top: 0 !important;
+    right: 7px !important;
+    font-size: 35px !important;
+}
+
+#sidenav {
+    height: 100%;
+    width: 50px;
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    background-color: #000505;
+    opacity: 0.8;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+}
+
+#sidenav img, #sidenav button {
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
+#sidenav button:hover {
+    color: #24F2EE;
+}
+
+@media screen and (max-height: 450px) {
+    body {
+        font-size: 11pt;
+    }
+    #sidenav {
+        padding-top: 15px;
+    }
+    #sidenav a, #sidenav button {
+        font-size: 13px;
     }
 }
