@@ -92,13 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function cat(filename) {
-        const filePath = currentPath === '/' ? filename : `${currentPath}/${filename}`;
-        if (fileSystem[currentPath].includes(filename)) {
-            return fileContents[filePath] || "File is empty or cannot be displayed.";
-        } else {
-            return `File not found: ${filename}`;
-        }
+    const filePath = currentPath === '/' ? filename : `${currentPath}/${filename}`;
+    if (fileSystem[currentPath].includes(filename)) {
+        return fileContents[filePath] || "File is empty or cannot be displayed.";
+    } else {
+        return `File not found: ${filename}`;
     }
+}
+
 
     function unlock(passphrase) {
         if (passphrase === 'Accept AI') {
