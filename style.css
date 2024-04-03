@@ -2,23 +2,41 @@ body, html {
     height: 100%;
     margin: 0;
     overflow: hidden;
-    background-color: #000;
-    color: #0f0;
-    font-family: 'Courier New', Courier, monospace;
+    background-color: #000; /* Black background */
+    color: #FFBF00; /* Amber font */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font */
 }
 
 #terminal {
     height: 95%;
     overflow-y: auto;
     padding: 20px;
+    border: none;
 }
 
 #terminal-input {
     width: calc(100% - 40px);
     background-color: #000;
     border: none;
-    color: #0f0;
+    color: #FFBF00; /* Amber font for input */
     padding: 10px 20px;
     font-family: 'Courier New', Courier, monospace;
     box-sizing: border-box;
+    outline: none;
+}
+
+/* Blinking cursor effect */
+#terminal-input::placeholder {
+    color: #FFBF00; /* Amber placeholder text */
+    opacity: 1; /* Firefox */
+}
+
+#terminal-input:focus::placeholder {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
 }
