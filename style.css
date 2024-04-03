@@ -1,5 +1,5 @@
 ::selection {
-    background: #f7d07e; /* Amber selection background */
+    background: #f7d07e;
 }
 
 html, body {
@@ -15,48 +15,25 @@ body {
     background-color: black;
 }
 
-#terminal { /* Adjusted from #container for terminal */
+#terminal {
     padding: .1em 1.5em 1em 1em;
     margin-left: 50px;
+    display: flex;
+    align-items: center;
 }
 
-#terminal-input { /* Adjusted from #cmdline for terminal input */
+#terminal-input {
     outline: none;
     background-color: transparent;
     margin: 0;
-    width: 100%;
-    font: inherit;
     border: none;
     color: inherit;
+    font: inherit;
+    flex-grow: 1;
 }
 
-.input-line { /* Styling for input line */
-    display: flex;
-    align-items: center;
-    clear: both;
-    color: #FFBF00; /* Amber text for input line */
-}
-
-.input-line > div:nth-child(2) {
-    flex: 1;
-}
-
-.prompt-color { /* Example class for custom prompt color */
-    color: #24F2EE;
-}
-
-#output { /* Assuming this is for additional output styling */
-    clear: both;
-    width: 100%;
-}
-
-#prompt { /* For the static part of the prompt */
-    white-space: nowrap;
+#prompt {
+    margin-right: 8px;
     user-select: none;
-}
-
-@media screen and (max-height: 450px) {
-    body {
-        font-size: 11pt;
-    }
+    color: inherit;
 }
