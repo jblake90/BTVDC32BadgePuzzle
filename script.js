@@ -44,34 +44,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function processCommand(input) {
-        let [command, ...args] = input.split(' ');
-        args = args.join(' ');
+   function processCommand(input) {
+    let [command, ...args] = input.split(' ');
+    args = args.join(' ');
 
-        switch (command) {
-            case 'ls':
-                terminal.innerHTML += `<div>${ls()}</div>`;
-                break;
-            case 'cd':
-                terminal.innerHTML += `<div>${cd(args)}</div>`;
-                break;
-            case 'cat':
-                terminal.innerHTML += `<div>${cat(args)}</div>`;
-                if (args === 'message_from_Maelcum.txt' && currentPath === '/Orbit/Zion') {
-                    setTimeout(revealSecretKey, 2000); // Wait a bit before revealing the key
-                }
-                break;
-            case 'unlock':
-                if (currentPath === '/Cyberspace_Depths') {
-                    terminal.innerHTML += `<div>${unlock(args)}</div>`;
-                } else {
-                    terminal.innerHTML += `<div>The 'unlock' command cannot be used here.</div>`;
-                }
-                break;
-            default:
-                terminal.innerHTML += `<div>Command not found: ${command}</div>`;
-        }
+    switch (command) {
+        case 'ls':
+            terminal.innerHTML += `<div>${ls()}</div>`;
+            break;
+        case 'cd':
+            terminal.innerHTML += `<div>${cd(args)}</div>`;
+            break;
+        case 'cat':
+            terminal.innerHTML += `<div>${cat(args)}</div>`;
+            if (args === 'message_from_Maelcum.txt' && currentPath === '/Orbit/Zion') {
+                setTimeout(revealSecretKey, 2000); // Wait a bit before revealing the key
+            }
+            break;
+        case 'unlock':
+            if (currentPath === '/Cyberspace_Depths') {
+                terminal.innerHTML += `<div>${unlock(args)}</div>`;
+            } else {
+                terminal.innerHTML += `<div>The 'unlock' command cannot be used here.</div>`;
+            }
+            break;
+        case 'clear':
+            terminal.innerHTML = ''; // Clear the terminal content
+            break;
+        default:
+            terminal.innerHTML += `<div>Command not found: ${command}</div>`;
     }
+}
+
 
     function ls() {
         return fileSystem[currentPath].join(' ');
