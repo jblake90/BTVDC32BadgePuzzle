@@ -15,12 +15,12 @@ body {
     background-color: black;
 }
 
-#terminal { /* Assuming #container corresponds to #terminal */
+#terminal { /* Adjusted from #container for terminal */
     padding: .1em 1.5em 1em 1em;
     margin-left: 50px;
 }
 
-#terminal-input { /* Assuming #cmdline corresponds to #terminal-input */
+#terminal-input { /* Adjusted from #cmdline for terminal input */
     outline: none;
     background-color: transparent;
     margin: 0;
@@ -30,7 +30,7 @@ body {
     color: inherit;
 }
 
-.input-line { /* Adjusting to ensure the prompt and input align correctly */
+.input-line { /* Styling for input line */
     display: flex;
     align-items: center;
     clear: both;
@@ -41,61 +41,22 @@ body {
     flex: 1;
 }
 
-.prompt-color { /* Not directly used, but here for potential customizations */
-    color: #24F2EE; /* Example: You can use this class for special prompt color */
+.prompt-color { /* Example class for custom prompt color */
+    color: #24F2EE;
 }
 
-/* Additional styles from your guide... */
 #output { /* Assuming this is for additional output styling */
     clear: both;
     width: 100%;
 }
 
-#prompt { /* Assuming this is for the static part of the prompt */
+#prompt { /* For the static part of the prompt */
     white-space: nowrap;
     user-select: none;
-}
-
-/* SIDE NAV - Assuming this is additional UI outside the terminal scope */
-#sidenavBtn {
-    position: absolute !important;
-    padding: 2px !important;
-    top: 0 !important;
-    right: 7px !important;
-    font-size: 35px !important;
-}
-
-#sidenav {
-    height: 100%;
-    width: 50px;
-    position: fixed;
-    z-index: 9;
-    top: 0;
-    left: 0;
-    background-color: #000505;
-    opacity: 0.8;
-    overflow-x: hidden;
-    transition: 0.3s;
-    padding-top: 60px;
-}
-
-#sidenav img, #sidenav button {
-    transition: 0.3s;
-    opacity: 0.8;
-}
-
-#sidenav button:hover {
-    color: #24F2EE;
 }
 
 @media screen and (max-height: 450px) {
     body {
         font-size: 11pt;
-    }
-    #sidenav {
-        padding-top: 15px;
-    }
-    #sidenav a, #sidenav button {
-        font-size: 13px;
     }
 }
