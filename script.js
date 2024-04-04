@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let input = this.value;
             terminal.innerHTML += `<div class="input-line"><div>${promptElement.textContent}</div><div>${input}</div></div>`;
             processCommand(input);
-            this.value = '';
+            this.value = ''; // Clear input after processing
             terminal.scrollTop = terminal.scrollHeight;
         }
     });
@@ -64,8 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'cat':
                 terminal.innerHTML += `<div>${cat(args)}</div>`;
                 break;
-            case 'unlock':
-                terminal.innerHTML += `<div>${unlock(args)}</div>`;
+            case 'decode':
+                terminal.innerHTML += `<div>${decode(args)}</div>`;
+                break;
+            case 'hack':
+                terminal.innerHTML += `<div>${hack(args)}</div>`;
+                break;
+            case 'use':
+                terminal.innerHTML += `<div>${use(args)}</div>`;
                 break;
             case 'clear':
                 terminal.innerHTML = '';
@@ -84,26 +90,43 @@ document.addEventListener('DOMContentLoaded', () => {
         const attemptPath = currentPath === '/' ? `/${directory}` : `${currentPath}/${directory}`;
         if (fileSystem[attemptPath]) {
             currentPath = attemptPath;
-            return `Moved to ${directory}`;
+            updatePrompt();
+            return '';
         } else {
             return `Directory not found: ${directory}`;
         }
     }
 
     function cat(filename) {
-        const filePath = currentPath === '/' ? filename : `${currentPath}/${filename}`;
-        if (fileSystem[currentPath].includes(filename)) {
+        const filePath = currentPath === '/' ? `/${filename}` : `${currentPath}/${filename}`;
+        if (fileSystem[currentPath] && fileSystem[currentPath].includes(filename)) {
             return fileContents[filePath] || "File is empty or cannot be displayed.";
         } else {
             return `File not found: ${filename}`;
         }
     }
 
-    function unlock(passphrase) {
-        if (currentPath === '/Cyberspace_Depths' && passphrase === 'Accept AI') {
-            return fileContents['/Cyberspace_Depths/final_unlocked_message.txt'] = 'The final key: UNITY. In accepting AI, we accept the extension of our own consciousness.';
+    function decode(message) {
+        // Simulating a basic decode function
+        let decodedMessage = message.split('').reverse().join(''); // Example logic
+        return `Decoded message: ${decodedMessage}`;
+    }
+
+    function hack(target) {
+        // Basic logic to simulate hacking a target
+        if (target === 'AI_core') {
+            return "Successfully hacked the AI core. Use 'cat AI_message.txt' to view its message.";
         } else {
-            return 'Incorrect passphrase. Unable to unlock the message.';
+            return `Failed to hack ${target}. Target not found or inaccessible.`;
+        }
+    }
+
+    function use(item) {
+        // Simulating using an item in the game
+        if (item === 'keycard') {
+            return "Used the keycard to access the locked room. Use 'cd locked_room' to enter.";
+        } else {
+            return `Cannot use ${item}. Item not found or not usable here.`;
         }
     }
 
