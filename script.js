@@ -77,8 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 appendToTerminal(use(arg));
                 break;
             case 'clear':
-                terminal.innerHTML = '';
-                terminal.appendChild(terminalInput); // Ensure input field is always present
+                clearTerminal();
                 break;
             default:
                 appendToTerminal(`${command}: command not found`);
@@ -128,6 +127,22 @@ document.addEventListener('DOMContentLoaded', function() {
             return 'Hidden key acquired. Now decode the final message with the decoder tool.';
         }
         return `Cannot use ${item}.`;
+    }
+    function clearTerminal() {
+    // First, remove all child nodes except the input field.
+        while (terminal.firstChild && terminal.removeChild(terminal.firstChild) !== terminalInput) {
+            terminal.removeChild(terminal.firstChild);
+        }
+
+    // Ensure the input field is the last child of the terminal.
+    // This step might be redundant if the input is always appended last,
+    // but it guarantees the correct structure after clearing.
+        if (terminal.lastChild !== terminalInput) {
+            terminal.appendChild(terminalInput);
+        }
+
+        terminalInput.value = ''; // Optionally clear the current input value.
+        terminalInput.focus(); // Bring focus back to the input field.
     }
 
     function displayFinalMessage(message) {
