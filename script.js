@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const terminal = document.getElementById('terminal');
     const terminalInput = document.createElement('input');
-    terminalInput.id = 'terminal-input';
     terminalInput.setAttribute('type', 'text');
     terminal.appendChild(terminalInput);
     terminalInput.focus();
