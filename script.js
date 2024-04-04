@@ -88,12 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
         terminal.insertBefore(line, terminalInput);
     }
 
-    // Directory listing
     function ls() {
         return fileSystem[currentPath].join('  ');
     }
 
-    // Change directory
     function cd(directory) {
         const newPath = currentPath === '/' ? `/${directory}` : `${currentPath}/${directory}`;
         if (fileSystem[newPath]) {
@@ -104,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // View file contents
     function cat(filename) {
         const filePath = `${currentPath}/${filename}`;
         if (fileContents[filePath]) {
@@ -114,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Decode messages
     function decode(filename) {
         const filePath = `${currentPath}/${filename}`;
         if (filename === 'encrypted_message.txt' && currentPath.includes('cybernetics_shop')) {
@@ -127,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Utility command
     function use(item) {
         if (item === 'decoder_tool.txt' && currentPath.includes('cybernetics_shop')) {
             return "Decoder tool activated. Ready to decode encrypted messages.";
@@ -138,15 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Display final message with typewriter effect
     function displayFinalMessage(message) {
-        terminal.innerHTML = ''; // Clear the terminal
+        const messageContainer = document.createElement('div');
+        terminal.insertBefore(messageContainer, terminalInput);
         let i = 0;
         function typeWriter() {
             if (i < message.length) {
-                terminal.textContent += message.charAt(i);
+                messageContainer.textContent += message.charAt(i);
                 i++;
-                setTimeout(typeWriter, 50); // Adjust typing speed here
+                setTimeout(typeWriter, 50);
             }
         }
         typeWriter();
