@@ -1,39 +1,34 @@
-::selection {
-    background: #f7d07e;
-}
-
-html, body {
-    width: 100%;
+body, html {
     height: 100%;
     margin: 0;
-}
-
-body {
-    font-size: 13pt;
-    font-family: monospace;
-    color: #FFBF00; /* Amber text */
+    font-family: 'Courier New', Courier, monospace;
     background-color: black;
+    color: limegreen;
 }
 
 #terminal {
-    padding: .1em 1.5em 1em 1em;
-    margin-left: 50px;
-    display: flex;
-    align-items: center;
+    padding: 20px;
+    height: calc(100% - 40px);
+    overflow-y: auto;
+    background-color: black;
+    font-size: 16px;
 }
 
-#terminal-input {
-    outline: none;
-    background-color: transparent;
-    margin: 0;
+#terminal input {
+    width: 100%;
+    background-color: black;
+    color: Amber;
     border: none;
-    color: inherit;
-    font: inherit;
-    flex-grow: 1;
+    padding: 0;
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
 }
 
-#prompt {
-    margin-right: 8px;
-    user-select: none;
-    color: inherit;
+#terminal input:focus {
+    outline: none;
+}
+
+#terminal div {
+    white-space: pre;
 }
