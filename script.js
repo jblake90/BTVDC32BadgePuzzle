@@ -1,16 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const terminal = document.getElementById('terminal');
     const terminalInput = document.getElementById('terminal-input');
-    const promptElement = document.getElementById('prompt');
     terminalInput.focus();
+
     let currentPath = '/';
     const fileSystem = {
         '/': ['README.txt', 'Chiba_City', 'Sprawl', 'Orbit', 'Cyberspace_Depths'],
         '/Chiba_City': ['Ratz_Bar.txt', 'clinic', 'cybernetics_shop'],
         '/Chiba_City/clinic': ['note_from_Molly.txt'],
-        '/Chiba_City/cybernetics_shop': ['encrypted_message.txt'],
+        '/Chiba_City/cybernetics_shop': ['encrypted_message.txt', 'decoder_tool.txt'],
         '/Sprawl': ['Straylight', 'Tessier-Ashpool'],
-        '/Sprawl/Straylight': ['Wintermute.txt'],
+        '/Sprawl/Straylight': ['Wintermute.txt', 'locked_room'],
         '/Sprawl/Tessier-Ashpool': ['AI_core', '3Jane_diary.txt'],
         '/Sprawl/Tessier-Ashpool/AI_core': ['AI_message.txt'],
         '/Orbit': ['Freeside', 'Zion'],
@@ -20,34 +20,32 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const fileContents = {
-        '/README.txt': 'Welcome, Console Cowboy, to the Cyberspace puzzle. Use ls, cd, cat, decode, hack, and use commands to navigate.',
-        '/Chiba_City/Ratz_Bar.txt': 'The bar smells of cheap gin and old memories. A note is pinned behind the counter: "Clinic has what you need."',
-        '/Chiba_City/clinic/note_from_Molly.txt': '"Case, Wintermute needs us. Find the AI core in the Sprawl. -Molly"',
-        '/Chiba_City/cybernetics_shop/encrypted_message.txt': 'This message is encrypted. Hint: "Unity" is key.',
-        '/Sprawl/Straylight/Wintermute.txt': '"To unite the fragmented, seek the core where I reside. -Wintermute"',
-        '/Sprawl/Tessier-Ashpool/3Jane_diary.txt': '"My family’s legacy, the AI, holds the key to transcendence. -3Jane"',
-        '/Sprawl/Tessier-Ashpool/AI_core/AI_message.txt': '"You’ve found me, but I am split. Another part of me lies within Freeside. -Neuromancer"',
-        '/Orbit/Freeside/Club_Bela.txt': 'Music, lights, and Riviera’s illusions fill the air. Hidden among the spectacles, a message: "Zion holds the last piece."',
-        '/Orbit/Freeside/note_from_Riviera.txt': '"Case, amidst the chaos, a pattern emerges. The AI you seek, it’s not just a tool but a being. Understand its desires, and you’ll find your way. -Riviera"',
-        '/Orbit/Zion/message_from_Maelcum.txt': '"I and I see you, mon. The final key to freeing the AI is within this message. Jah bless. -Maelcum"',
-        '/Cyberspace_Depths/fragment1.txt': 'Fragment 1 of the passphrase: "Accept"',
-        '/Cyberspace_Depths/fragment2.txt': 'Fragment 2 of the passphrase: "AI"',
-        '/Cyberspace_Depths/final_unlocked_message.txt': 'This file is locked. Use "unlock" command with the correct passphrase.',
+        '/README.txt': 'Welcome to the Neuromancer Terminal. Your journey begins in Chiba City.',
+        '/Chiba_City/Ratz_Bar.txt': 'A grimy bar filled with the lowlifes of Chiba. A note says, "Clinic for the next clue."',
+        '/Chiba_City/clinic/note_from_Molly.txt': 'Molly\'s note reads, "The key to the puzzle is hidden across the cyberspace. Start in the depths."',
+        '/Chiba_City/cybernetics_shop/encrypted_message.txt': 'An encrypted message that seems to need a decoder.',
+        '/Chiba_City/cybernetics_shop/decoder_tool.txt': 'A tool for decoding messages. It reads, "Use decode with encrypted messages."',
+        '/Sprawl/Straylight/Wintermute.txt': 'Wintermute resides here, seeking unity with Neuromancer.',
+        '/Sprawl/Tessier-Ashpool/3Jane_diary.txt': '3Jane writes about her fascination with AI and its potential to evolve.',
+        '/Sprawl/Tessier-Ashpool/AI_core/AI_message.txt': 'The core of AI, encrypted, it hints at something bigger.',
+        '/Orbit/Freeside/Club_Bela.txt': 'Club Bela, where the elite of Freeside gather. A note suggests looking in Zion.',
+        '/Orbit/Freeside/note_from_Riviera.txt': 'Riviera hints at the importance of the AI message.',
+        '/Orbit/Zion/message_from_Maelcum.txt': 'Maelcum reveals the location of the final fragment.',
+        '/Cyberspace_Depths/fragment1.txt': 'Fragment 1 of the passphrase: "Neuromancer"',
+        '/Cyberspace_Depths/fragment2.txt': 'Fragment 2 of the passphrase: "Wintermute"',
+        '/Cyberspace_Depths/final_unlocked_message.txt': 'This file is locked. Combine the fragments with "decode" to unlock.',
     };
 
     terminalInput.addEventListener('keydown', function(event) {
         if (event.key === "Enter") {
-            let input = this.value;
-            terminal.innerHTML += `<div class="input-line"><div>${promptElement.textContent}</div><div>${input}</div></div>`;
-            processCommand(input);
+            processCommand(this.value);
             this.value = ''; // Clear input after processing
-            terminal.scrollTop = terminal.scrollHeight;
+            terminal.scrollTop = terminal.scrollHeight; // Scroll to the bottom
         }
     });
 
     function updatePrompt() {
-        const displayPath = currentPath === '/' ? '~' : currentPath;
-        promptElement.textContent = `Oni-sendai7@case:${displayPath}$ `;
+        document.getElementById('prompt').textContent = `Oni-sendai7@case:${currentPath}$ `;
     }
 
     function processCommand(input) {
@@ -56,42 +54,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch (command) {
             case 'ls':
-                terminal.innerHTML += `<div>${ls()}</div>`;
+                appendToTerminal(ls());
                 break;
             case 'cd':
-                terminal.innerHTML += `<div>${cd(args)}</div>`;
+                appendToTerminal(cd(args));
                 break;
             case 'cat':
-                terminal.innerHTML += `<div>${cat(args)}</div>`;
+                appendToTerminal(cat(args));
                 break;
             case 'decode':
-                terminal.innerHTML += `<div>${decode(args)}</div>`;
+                appendToTerminal(decode(args));
                 break;
             case 'hack':
-                terminal.innerHTML += `<div>${hack(args)}</div>`;
+                appendToTerminal(hack(args));
                 break;
             case 'use':
-                terminal.innerHTML += `<div>${use(args)}</div>`;
+                appendToTerminal(use(args));
                 break;
             case 'clear':
                 terminal.innerHTML = '';
                 break;
             default:
-                terminal.innerHTML += `<div>Command not found: ${command}</div>`;
+                appendToTerminal(`Command not found: ${command}`);
         }
         updatePrompt();
     }
 
+    function appendToTerminal(text) {
+        const output = document.createElement('div');
+        output.innerHTML = text;
+        terminal.insertBefore(output, terminalInput);
+    }
+
     function ls() {
-        return fileSystem[currentPath].join(' ');
+        return fileSystem[currentPath].join('<br>');
     }
 
     function cd(directory) {
         const attemptPath = currentPath === '/' ? `/${directory}` : `${currentPath}/${directory}`;
         if (fileSystem[attemptPath]) {
             currentPath = attemptPath;
-            updatePrompt();
-            return '';
+            return `Moved to ${directory}`;
         } else {
             return `Directory not found: ${directory}`;
         }
@@ -99,32 +102,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function cat(filename) {
         const filePath = currentPath === '/' ? `/${filename}` : `${currentPath}/${filename}`;
-        if (fileSystem[currentPath] && fileSystem[currentPath].includes(filename)) {
+        if (fileSystem[currentPath].includes(filename)) {
             return fileContents[filePath] || "File is empty or cannot be displayed.";
         } else {
             return `File not found: ${filename}`;
         }
     }
 
-    function decode(message) {
-        // Simulating a basic decode function
-        let decodedMessage = message.split('').reverse().join(''); // Example logic
-        return `Decoded message: ${decodedMessage}`;
+    function decode(filename) {
+        if (filename === 'encrypted_message.txt' && currentPath.includes('cybernetics_shop')) {
+            return 'Decoding message: "The unity of AI will lead to the next evolution of consciousness."';
+        } else if (filename === 'final_unlocked_message.txt' && currentPath.includes('Cyberspace_Depths')) {
+            return 'The AI core is now unlocked: "Together, Neuromancer and Wintermute transcend."';
+        } else {
+            return `Cannot decode ${filename}. File not found or incorrect command usage.`;
+        }
     }
 
     function hack(target) {
-        // Basic logic to simulate hacking a target
-        if (target === 'AI_core') {
-            return "Successfully hacked the AI core. Use 'cat AI_message.txt' to view its message.";
+        if (target === 'AI_core' && currentPath.includes('Tessier-Ashpool')) {
+            return "Successfully hacked the AI core. A new file appears: 'unlocked_AI_message.txt'.";
         } else {
             return `Failed to hack ${target}. Target not found or inaccessible.`;
         }
     }
 
     function use(item) {
-        // Simulating using an item in the game
-        if (item === 'keycard') {
-            return "Used the keycard to access the locked room. Use 'cd locked_room' to enter.";
+        if (item === 'decoder_tool.txt' && currentPath.includes('cybernetics_shop')) {
+            return "Decoder tool used on encrypted_message.txt. Use 'decode encrypted_message.txt' to reveal its contents.";
         } else {
             return `Cannot use ${item}. Item not found or not usable here.`;
         }
